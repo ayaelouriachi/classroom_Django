@@ -223,5 +223,5 @@ def videocall(request):
 def join_room(request):
     if request.method == 'POST':
         roomID = request.POST['roomID']
-        return redirect("/meeting?roomID=" + roomID)
+        return redirect("/classrooms/meeting?roomID=" + roomID)
     return render(request, 'joinroom.html')
