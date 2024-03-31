@@ -200,13 +200,28 @@ def submit_assignment_request(request,assignment_id):
 
 
 
-def generate_class_code(total_digits,existing_codes) :  
-    digits = ''.join([str(i) for i in range(0,10)])
+def generate_class_code(total_digits, existing_codes):  
+    digits = ''.join([str(i) for i in range(0, 10)])
     code = ""  
     while True:
-        for i in range(total_digits) : 
+        for i in range(total_digits): 
             code += digits[math.floor(random.random() * 10)] 
         if code not in existing_codes:
             print('Code not in existing codes')
-            break
+            break 
     return code 
+
+@login_required
+def dashboard(request):
+    return render(request, 'dashboard.html', {'name': request.user. username})
+
+@login_required
+def videocall(request):
+    return render(request, 'videocall.html', {'name': request.user.first_name + " " + request.user.last_name})
+
+@login_required
+def join_room(request):
+    if request.method == 'POST':
+        roomID = request.POST['roomID']
+        return redirect("/meeting?roomID=" + roomID)
+    return render(request, 'joinroom.html')
